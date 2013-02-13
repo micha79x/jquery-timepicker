@@ -653,6 +653,7 @@ requires jQuery 1.7+
 		}
 
 		var d = new Date(0);
+
 		var timeRegex;
 		if (timeString.indexOf(":") !== -1) {
 			// colon-based parser
