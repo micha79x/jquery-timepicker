@@ -653,14 +653,23 @@ requires jQuery 1.7+
 		}
 
 		var d = new Date(0);
-		var time = timeString.toLowerCase().match(/(\d{1,2})(?::(\d{1,2}))?(?::(\d{2}))?\s*([pa]?)/);
+		var timeRegex;
+		if (timeString.indexOf(":") !== -1) {
+			// colon-based parser
+			timeRegex = /(\d{1,2})(?::(\d{1,2}))?(?::(\d{2}))?\s*([pa]?)/;
+		} else {
+			// zero-padded, fixed-position parser
+			timeRegex = /^([0-2][0-9]):?([0-5][0-9])?:?([0-5][0-9])?\s*([pa]?)$/;
+		}
+
+		var time = timeString.toLowerCase().match(timeRegex);
 
 		if (!time) {
 			return null;
 		}
 
 		var hour = parseInt(time[1]*1, 10);
-        var hours;
+		var hours;
 
 		if (time[4]) {
 			if (hour == 12) {
